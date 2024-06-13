@@ -410,22 +410,24 @@ def change_directory_structure(tiny_imagenet_val_directory):
         shutil.copy(name, tiny_imagenet_val_directory + "/{}".format(sample_class))
 
 
-def load_imageNet(args):
-    current_directory = Path().cwd()
-    data_path = ""
-    if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
-        data_path = "/nobackup/sclaam/data/"
-    elif "Luis Alfredo" == current_directory.owner() or "Luis Alfredo" in current_directory.__str__():
-        data_path = "C:/Users\Luis Alfredo\OneDrive - University of Leeds\PhD\Datasets\MNIST"
-    elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-        data_path = "datasets/"
-    traindir = data_path + 'imagenet/' + 'train'
-    testdir = data_path + 'imagenet/' + 'val'
+def load_imagenet(args):
+
+    # current_directory = Path().cwd()
+    # data_path = ""
+    # if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
+    #     data_path = "/nobackup/sclaam/data/"
+    # elif "Luis Alfredo" == current_directory.owner() or "Luis Alfredo" in current_directory.__str__():
+    #     data_path = "C:/Users\Luis Alfredo\OneDrive - University of Leeds\PhD\Datasets\MNIST"
+    # elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
+    #     data_path = "datasets/"
+    # traindir = data_path + 'imagenet/' + 'train'
+    # testdir = data_path + 'imagenet/' + 'val'
+
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
 
     whole_train_dataset = datasets.ImageFolder(
-        traindir,
+        args["traindir"],
         transforms.Compose([
             transforms.RandomResizedCrop(224),
             transforms.RandomHorizontalFlip(),
@@ -434,7 +436,7 @@ def load_imageNet(args):
         ]))
     print(f"Length of dataset: {len(whole_train_dataset)}")
     print(args)
-    test_dataset = datasets.ImageFolder(testdir, transforms.Compose([
+    test_dataset = datasets.ImageFolder(args["valdir"], transforms.Compose([
         transforms.Resize(256),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
@@ -444,8 +446,8 @@ def load_imageNet(args):
     train_dataset, val_dataset = torch.utils.data.random_split(whole_train_dataset,
                                                                [len(whole_train_dataset) - 5000, 5000])
     # big_test,small_test = torch.utils.data.random_split(test_dataset, [len(test_dataset)-5000, 5000])
-    my_dataset = val_dataset
-    write_path = data_path + "imagenet/valSplit_dataset.beton"
+    # my_dataset = val_dataset
+    # write_path = data_path + "imagenet/valSplit_dataset.beton"
 
     # For the validation set that I use to recover accuracy
 

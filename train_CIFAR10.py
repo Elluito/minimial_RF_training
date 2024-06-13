@@ -437,21 +437,29 @@ def get_flops_for_config(args):
 def main(args):
 
     print(args)
-
     global best_acc, testloader, device, criterion, trainloader, optimizer, net, use_ffcv
+
     use_ffcv = args.ffcv
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
     print("Device: {}".format(device))
+
     best_acc = 0  # best test accuracy
+
     start_epoch = 0  # start from epoch 0 or last checkpoint epoch
+
     cifar10_stats = ((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+
     cifar100_stats = ((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
 
     stats_to_use = cifar10_stats if args.dataset == "cifar10" else cifar100_stats
 
     # Data
     print('==> Preparing data..')
+
     current_directory = Path().cwd()
+
     data_path = args.data_folder
     # if "sclaam" == current_directory.owner() or "sclaam" in current_directory.__str__():
     #     data_path = "/nobackup/sclaam/data"
@@ -462,10 +470,15 @@ def main(args):
     # elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
     #     data_path = "/home/luisaam/Documents/PhD/data/"
     print(data_path)
-    batch_size = 128
+
+    batch_size = args.batch_size
+
     if "32" in args.name:
+
         batch_size = 32
+
     if "64" in args.name:
+
         batch_size = 64
 
     transform_train = transforms.Compose([
@@ -511,9 +524,9 @@ def main(args):
             {"traindir": data_path + "/small_imagenet/train", "valdir": data_path + "/small_imagenet/val",
              "num_workers": args.num_workers, "batch_size": batch_size})
     if args.dataset == "imagenet":
-        from test_imagenet import load_imageNet
-        trainloader, valloader, testloader =load_imageNet(
-            {"traindir": data_path + "/small_imagenet/train", "valdir": data_path + "/small_imagenet/val",
+        from test_imagenet import load_imagenet
+        trainloader, valloader, testloader = load_imagenet(
+            {"traindir": data_path + "/imagenet/train", "valdir": data_path + "/imagenet/val",
              "num_workers": args.num_workers, "batch_size": batch_size})
 
     # inputs, y = next(iter(trainloader))
