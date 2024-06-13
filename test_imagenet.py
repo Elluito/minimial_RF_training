@@ -14,6 +14,8 @@ from pathlib import Path
 from torch.utils.data import random_split
 ## FFCV imports
 from typing import List
+
+
 # from ffcv.fields import IntField, RGBImageField
 # from ffcv.fields.decoders import IntDecoder, SimpleRGBImageDecoder
 # from ffcv.loader import Loader, OrderOption
@@ -352,7 +354,6 @@ def load_small_imagenet(args):
                                              shuffle=True)
 
     return train_loader, val_loader, test_loader
-
 
 
 def load_tiny_imagenet(args):

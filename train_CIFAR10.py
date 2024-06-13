@@ -511,8 +511,8 @@ def main(args):
             {"traindir": data_path + "/small_imagenet/train", "valdir": data_path + "/small_imagenet/val",
              "num_workers": args.num_workers, "batch_size": batch_size})
     if args.dataset == "imagenet":
-        from test_imagenet import load_small_imagenet
-        trainloader, valloader, testloader = load_small_imagenet(
+        from test_imagenet import load_imageNet
+        trainloader, valloader, testloader =load_imageNet(
             {"traindir": data_path + "/small_imagenet/train", "valdir": data_path + "/small_imagenet/val",
              "num_workers": args.num_workers, "batch_size": batch_size})
 
