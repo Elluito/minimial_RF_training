@@ -331,18 +331,18 @@ def load_small_imagenet(args):
             transforms.ToTensor(),
             normalize_train,
         ]))
-    current_directory = Path(args["traindir"])
+    # current_directory = Path(args["traindir"])
 
-    train_size = 95000
-    val_size = 5000
-    if 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
-        train_size = 94999
-        val_size = 5000
-    elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
-        train_size = 94999
-        val_size = 5000
+    # train_size = 95000
+    # val_size = 5000
+    # if 'lla98-mtc03' == current_directory.owner() or "lla98-mtc03" in current_directory.__str__():
+    #     train_size = 94999
+    #     val_size = 5000
+    # elif "luisaam" == current_directory.owner() or "luisaam" in current_directory.__str__():
+    #     train_size = 94999
+    #     val_size = 5000
 
-    train_data, val_data = random_split(whole_train_dataset, [train_size, val_size])
+    train_data, val_data = random_split(whole_train_dataset, [len(whole_train_dataset)-5000, 5000])
 
     train_loader = torch.utils.data.DataLoader(train_data,
                                                batch_size=args["batch_size"],

@@ -551,6 +551,9 @@ def main(args):
             net = ResNet18_rf(num_classes=200, RF_level=args.RF_level, multiplier=args.width)
         if args.type == "normal" and args.dataset == "small_imagenet":
             net = ResNet18_rf(num_classes=200, RF_level=args.RF_level, multiplier=args.width)
+        if args.type == "normal" and args.dataset == "imagenet":
+            net = ResNet18_rf(num_classes=1000, RF_level=args.RF_level, multiplier=args.width)
+
     if args.model == "resnet50":
         if args.type == "normal" and args.dataset == "cifar10":
             net = ResNet50_rf(num_classes=10, rf_level=args.RF_level, multiplier=args.width)
@@ -561,6 +564,9 @@ def main(args):
             net = ResNet50_rf(num_classes=200, rf_level=args.RF_level, multiplier=args.width)
         if args.type == "normal" and args.dataset == "small_imagenet":
             net = ResNet50_rf(num_classes=200, rf_level=args.RF_level, multiplier=args.width)
+        if args.type == "normal" and args.dataset == "imagenet":
+            net = ResNet50_rf(num_classes=1000, rf_level=args.RF_level, multiplier=args.width)
+
         if args.type == "pytorch" and args.dataset == "cifar10":
             net = resnet50()
             in_features = net.fc.in_features
@@ -602,6 +608,8 @@ def main(args):
             net = VGG_RF("VGG19_rf", num_classes=200, RF_level=args.RF_level)
         if args.type == "normal" and args.dataset == "small_imagenet":
             net = VGG_RF("VGG19_rf", num_classes=200, RF_level=args.RF_level)
+        if args.type == "normal" and args.dataset == "imagenet":
+            net = VGG_RF("VGG19_rf", num_classes=1000, RF_level=args.RF_level)
     if args.model == "resnet_small":
         if args.type == "normal" and args.dataset == "cifar10":
             net = small_ResNet_rf(num_classes=10, RF_level=args.RF_level, multiplier=args.width)
@@ -612,6 +620,8 @@ def main(args):
             net = small_ResNet_rf(num_classes=200, RF_level=args.RF_level, multiplier=args.width)
         if args.type == "normal" and args.dataset == "small_imagenet":
             net = small_ResNet_rf(num_classes=200, RF_level=args.RF_level, multiplier=args.width)
+        if args.type == "normal" and args.dataset == "imagenet":
+            net = small_ResNet_rf(num_classes=1000, RF_level=args.RF_level, multiplier=args.width)
         if args.type == "pytorch" and args.dataset == "cifar10":
             raise NotImplementedError
             # net = resnet50()
