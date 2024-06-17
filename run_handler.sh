@@ -5,19 +5,19 @@
 #--model --dataset --num_workers --RF_level--type --epochs  --name  --width  --record  --save_folder --data_folder
 
 # "training_Level_2_resnet50_small_imagenet"
-./run_training.sh "resnet50" "imagenet" 4 "2" "normal" 50 "recording_50" 1 1 $1 $2
+#./run_training.sh "resnet50" "small_imagenet" 4 "2" "normal" 50 "recording_50" 1 1 $1 $2
 # "training_Level_3_resnet50_small_imagenet"
-./run_training.sh "resnet50" "imagenet" 4 "3" "normal" 50 "recording_50" 1 1 $1 $2
+./run_training.sh "resnet50" "small_imagenet" 4 "3" "normal" 200 "recording_200" 1 1 $1 $2
 # "training_Level_4_resnet50_small_imagenet"
-./run_training.sh "resnet50" "imagenet" 4 "4" "normal" 50 "recording_50" 1 1 $1 $2
+./run_training.sh "resnet50" "small_imagenet" 4 "4" "normal" 200 "recording_200" 1 1 $1 $2
 # "training_Level_5_resnet50_small_imagenet"
-./run_training.sh "resnet50" "imagenet" 4 "k6" "normal" 50 "recording_50" 1 1 $1 $2
+./run_training.sh "resnet50" "small_imagenet" 4 "5" "normal" 200 "recording_200" 1 1 $1 $2
 # "training_Level_6_resnet50_small_imagenet"
-./run_training.sh "resnet50" "imagenet" 4 "k7" "normal" 50 "recording_50" 1 1 $1 $2
+./run_training.sh "resnet50" "small_imagenet" 4 "6" "normal" 200 "recording_200" 1 1 $1 $2
 # "training_Level_7_resnet50_small_imagenet"
-./run_training.sh "resnet50" "imagenet" 4 "k8" "normal" 50 "recording_50" 1 1 $1 $2
+./run_training.sh "resnet50" "small_imagenet" 4 "7" "normal" 200 "recording_200" 1 1 $1 $2
 # "training_Level_8_resnet50_small_imagenet"
-./run_training.sh "resnet50" "imagenet" 4 "k9" "normal" 50 "recording_50" 1 1 $1 $2
+./run_training.sh "resnet50" "small_imagenet" 4 "8" "normal" 200 "recording_200" 1 1 $1 $2
 ## "training_Level_9_resnet50_small_imagenet"
 #./run_training.sh "resnet50" "small_imagenet" 4 "9" "normal" 200 "recording_200" 1 1 $1 $2
 ## "training_Level_10_resnet50_small_imagenet"
