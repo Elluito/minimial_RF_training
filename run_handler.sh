@@ -8,6 +8,7 @@
 #./run_training.sh "resnet50" "small_imagenet" 4 "2" "normal" 50 "recording_50" 1 1 $1 $2
 # "training_Level_3_resnet50_small_imagenet"
 ./run_training.sh "resnet50" "small_imagenet" 4 "3" "normal" 200 "recording_200" 1 1 $1 $2 1
+
 # "training_Level_4_resnet50_small_imagenet"
 ./run_training.sh "resnet50" "small_imagenet" 4 "4" "normal" 200 "recording_200" 1 1 $1 $2 1
 # "training_Level_5_resnet50_small_imagenet"
