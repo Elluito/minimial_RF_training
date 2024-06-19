@@ -7,18 +7,19 @@
 # "training_Level_2_resnet50_small_imagenet"
 #./run_training.sh "resnet50" "small_imagenet" 4 "2" "normal" 50 "recording_50" 1 1 $1 $2
 # "training_Level_3_resnet50_small_imagenet"
-./run_training.sh "resnet50" "small_imagenet" 4 "3" "normal" 200 "recording_200" 1 1 $1 $2 1
+#./run_training.sh "resnet50" "small_imagenet" 4 "3" "normal" 200 "recording_200" 1 1 $1 $2 1
 
 # "training_Level_4_resnet50_small_imagenet"
-./run_training.sh "resnet50" "small_imagenet" 4 "4" "normal" 200 "recording_200" 1 1 $1 $2 1
+#./run_training.sh "resnet50" "small_imagenet" 4 "4" "normal" 200 "recording_200" 1 1 $1 $2 1
 # "training_Level_5_resnet50_small_imagenet"
-./run_training.sh "resnet50" "small_imagenet" 4 "5" "normal" 200 "recording_200" 1 1 $1 $2 1
+
+./run_training.sh "resnet50" "imagenet" 4 "5" "normal" 50 "recording_50" 1 1 $1 $2 1  &&
 # "training_Level_6_resnet50_small_imagenet"
-./run_training.sh "resnet50" "small_imagenet" 4 "6" "normal" 200 "recording_200" 1 1 $1 $2 1
+#./run_training.sh "resnet50" "imagenet" 4 "6" "normal" 200 "recording_200" 1 1 $1 $2 1
 # "training_Level_7_resnet50_small_imagenet"
-./run_training.sh "resnet50" "small_imagenet" 4 "7" "normal" 200 "recording_200" 1 1 $1 $2 1
+#./run_training.sh "resnet50" "imagenet" 4 "7" "normal" 200 "recording_200" 1 1 $1 $2 1
 # "training_Level_8_resnet50_small_imagenet"
-./run_training.sh "resnet50" "small_imagenet" 4 "8" "normal" 200 "recording_200" 1 1 $1 $2 1
+./run_training.sh "resnet50" "imagenet" 4 "8" "normal" 50 "recording_50" 1 1 $1 $2 1
 ## "training_Level_9_resnet50_small_imagenet"
 #./run_training.sh "resnet50" "small_imagenet" 4 "9" "normal" 200 "recording_200" 1 1 $1 $2
 ## "training_Level_10_resnet50_small_imagenet"
