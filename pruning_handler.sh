@@ -22,7 +22,7 @@ levels_max=${#rf_levels[@]}                                  # Take the length o
 number_pruning_rates=${#pruning_rates[@]}                            # Take the length of that array
 for ((idxA=0; idxA<number_pruning_rates; idxA++)); do                # iterate idxA from 0 to length
 for ((idxB=0; idxB<levels_max; idxB++));do              # iterate idxB from 0 to length
-./run_pruning.sh "${model}" "${dataset}" 4  "${rf_levels[$idxB]}" "normal" "${directory}" "${pruning_rates[$idxA]}" 1 "${data_path}" &
+./run_pruning.sh "${model}" "${dataset}" 4  "${rf_levels[$idxB]}" "normal" "${directory}" "${pruning_rates[$idxA]}" 1 "${data_path}"
 done
 done
 }
