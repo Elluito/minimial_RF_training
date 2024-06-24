@@ -31,6 +31,6 @@ done
 
 
 
-run_pruning "resnet50" "imagenet" "${HOME}/checkpoints" "${HOME}/checkpoints" 1
+run_pruning "resnet50" "imagenet" $1 $2 1
 #run_pruning "resne50" "imagenet" "${HOME}/checkpoints" 0
 
