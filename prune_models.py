@@ -621,7 +621,7 @@ def prune_with_rate(net: torch.nn.Module, amount: typing.Union[int, float], prun
         raise NotImplementedError("Not implemented for type {}".format(type))
 
 
-def test(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=False, batch_flops=0, number_batches=0):
+def test_topk(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=False, batch_flops=0, number_batches=0):
     if use_cuda:
         net.cuda()
     criterion = nn.CrossEntropyLoss()
@@ -680,7 +680,7 @@ def test(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=Fals
                 print("Predicted by my function: {}\n         Targets: {}".format(predicted.data.cpu(),
                                                                                   targets.data.cpu()))
 
-                break
+
 
             # else:
             #
@@ -721,6 +721,64 @@ def test(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=Fals
         except:
 
             return 100. * correct/ total
+
+def test(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=False, batch_flops=0, number_batches=0):
+
+    if use_cuda:
+        net.cuda()
+    criterion = nn.CrossEntropyLoss()
+    net.eval()
+    test_loss = 0
+    correct = 0
+    total = 0
+    if count_flops:
+        assert batch_flops != 0, "If count_flops is True,batch_flops must be non-zero"
+
+    sparse_flops = 0
+    first_time = 1
+    sparse_flops_batch = 0
+    with torch.no_grad():
+        for batch_idx, (inputs, targets) in enumerate(testloader):
+            if use_cuda:
+                inputs, targets = inputs.cuda(), targets.cuda()
+            outputs = net(inputs)
+            loss = criterion(outputs, targets)
+            if count_flops:
+                sparse_flops += batch_flops
+            test_loss += loss.data.item()
+            if torch.all(outputs > 0):
+                _, predicted = torch.max(outputs.data, 1)
+            else:
+                soft_max_outputs = F.softmax(outputs, dim=1)
+                _, predicted = torch.max(soft_max_outputs, 1)
+            total += targets.size(0)
+            correct += predicted.eq(targets.data).cpu().sum()
+
+            # print(correct/total)
+
+            if batch_idx % 100 == 0:
+                if verbose == 2:
+                    print('Test Loss: %.3f | Test Acc: %.3f%% (%d/%d)'
+                          % (test_loss / (batch_idx + 1), 100. * correct.item() / total, correct, total))
+            if one_batch:
+                if count_flops:
+                    return 100. * correct.item() / total, sparse_flops
+                else:
+                    return 100. * correct.item() / total
+
+            if number_batches > 0:
+                if number_batches < batch_idx:
+                    return 100. * correct.item() / total
+
+    if verbose == 1 or verbose == 2:
+        print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.2f}%)\n'.format(
+            test_loss / len(testloader), correct, total,
+            100. * correct.item() / total))
+    # net.cpu()
+    if count_flops:
+        return 100. * correct.item() / total, sparse_flops
+    else:
+        return 100. * correct.item() / total
 
 def main(args):
     if args.model == "vgg19":
