@@ -716,8 +716,11 @@ def test(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=Fals
     if count_flops:
         return 100. * correct.item() / total, sparse_flops
     else:
-        return 100. * correct.item() / total
+        try:
+            return 100. * correct.item() / total
+        except:
 
+            return 100. * correct/ total
 
 def main(args):
     if args.model == "vgg19":
