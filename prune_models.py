@@ -767,6 +767,8 @@ def main(args):
             net = ResNet50_rf(num_classes=100, rf_level=args.RF_level)
         if args.type == "normal" and args.dataset == "tiny_imagenet":
             net = ResNet50_rf(num_classes=200, rf_level=args.RF_level)
+        if args.type == "normal" and args.dataset == "imagenet":
+            net = ResNet50_rf(num_classes=1000, rf_level=args.RF_level)
         if args.type == "pytorch" and args.dataset == "cifar10":
             net = resnet50()
             in_features = net.fc.in_features
