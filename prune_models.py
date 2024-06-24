@@ -35,6 +35,7 @@ import timm
 import pandas as pd
 from train_CIFAR10 import get_datasets
 import math
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 imagenet_normalize = trnfs.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 normalize = trnfs.Normalize(mean=[0.485, 0.456, 0.406],
