@@ -854,6 +854,9 @@ def main(args):
         remove_reparametrization(net, exclude_layer_list=cfg.exclude_layers)
 
         t0 = time.time()
+
+        use_cuda = True if device == "cuda" else False
+
         if args.ffcv:
             pruned_accuracy = test_ffcv(net, testloader=testloader, verbose=0)
         else:
