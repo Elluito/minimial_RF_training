@@ -433,8 +433,8 @@ def get_flops_for_config(args):
         if args.type == "normal" and args.dataset == "small_imagenet":
             net = small_VGG_RF("small_vgg", num_classes=200, RF_level=args.RF_level)
 
-def get_datasets(args):
 
+def get_datasets(args):
     cifar10_stats = ((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
 
     cifar100_stats = ((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
@@ -453,11 +453,9 @@ def get_datasets(args):
     batch_size = args.batch_size
 
     if "32" in args.name:
-
         batch_size = 32
 
     if "64" in args.name:
-
         batch_size = 64
 
     transform_train = transforms.Compose([
@@ -508,10 +506,10 @@ def get_datasets(args):
             {"traindir": data_path + "/imagenet/train", "valdir": data_path + "/imagenet/val",
              "num_workers": args.num_workers, "batch_size": batch_size})
 
-    return trainloader,valloader,testloader
+    return trainloader, valloader, testloader
+
 
 def main(args):
-
     print(args)
     global best_acc, testloader, device, criterion, trainloader, optimizer, net, use_ffcv
 
@@ -605,7 +603,7 @@ def main(args):
     #     trainloader, valloader, testloader = load_imagenet(
     #         {"traindir": data_path + "/imagenet/train", "valdir": data_path + "/imagenet/val",
     #          "num_workers": args.num_workers, "batch_size": batch_size})
-    trainloader,valloader,testloader = get_datasets(args)
+    trainloader, valloader, testloader = get_datasets(args)
     # inputs, y = next(iter(trainloader))
     #
     # print("inputs shape: {}".format(inputs.shape))
