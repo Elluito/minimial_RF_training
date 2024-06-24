@@ -746,7 +746,7 @@ def main(args):
         train, _, testloader = make_ffcv_small_imagenet_dataloaders(args.ffcv_train, args.ffcv_val,
                                                                     128, args.num_workers)
     else:
-        train, val, testloader = get_datasets(cfg)
+        train, val, testloader = get_datasets(args)
 
     from torchvision.models import resnet18, resnet50
 
@@ -934,7 +934,7 @@ if __name__ == '__main__':
     parser.add_argument('--pruning_rate', default=0.9, type=float, help='Pruning rate')
     parser.add_argument('--epochs', default=200, type=int, help='Epochs to train')
     parser.add_argument('--width', default=1, type=int, help='Width of the model')
-    parser.add_argument('--data_folder', default="/nobackup/sclaam/checkpoints", type=str,
+    parser.add_argument('--data_folder', default="/nobackup/sclaam/data", type=str,
                         help='Location to save the models', required=True)
     parser.add_argument('--ffcv', action='store_true', help='Use FFCV loaders')
 
