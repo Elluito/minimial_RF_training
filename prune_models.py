@@ -35,6 +35,7 @@ import timm
 import pandas as pd
 from train_CIFAR10 import get_datasets
 import math
+
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 imagenet_normalize = trnfs.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -621,7 +622,8 @@ def prune_with_rate(net: torch.nn.Module, amount: typing.Union[int, float], prun
         raise NotImplementedError("Not implemented for type {}".format(type))
 
 
-def test_topk(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=False, batch_flops=0, number_batches=0):
+def test_topk(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=False, batch_flops=0,
+              number_batches=0):
     if use_cuda:
         net.cuda()
     criterion = nn.CrossEntropyLoss()
@@ -680,8 +682,6 @@ def test_topk(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops
                 print("Predicted by my function: {}\n         Targets: {}".format(predicted.data.cpu(),
                                                                                   targets.data.cpu()))
 
-
-
             # else:
             #
             #     soft_max_outputs = F.softmax(outputs, dim=1)
@@ -720,10 +720,10 @@ def test_topk(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops
             return 100. * correct.item() / total
         except:
 
-            return 100. * correct/ total
+            return 100. * correct / total
+
 
 def test(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=False, batch_flops=0, number_batches=0):
-
     if use_cuda:
         net.cuda()
     criterion = nn.CrossEntropyLoss()
@@ -779,6 +779,7 @@ def test(net, use_cuda, testloader, one_batch=False, verbose=2, count_flops=Fals
         return 100. * correct.item() / total, sparse_flops
     else:
         return 100. * correct.item() / total
+
 
 def main(args):
     if args.model == "vgg19":
@@ -930,6 +931,7 @@ def main(args):
         print("Time for inference: {}".format(t1 - t0))
 
         pruned_accuracy_list.append(pruned_accuracy)
+
         weight_names, weights = zip(*get_layer_dict(net))
 
         zero_number = lambda w: (torch.count_nonzero(w == 0) / w.nelement()).cpu().numpy()
@@ -965,9 +967,10 @@ def main(args):
         df2 = pd.DataFrame({"layer_names": weight_names, "pr": pruning_rates_per_layer})
         print("Seed from file {}".format(seed_from_file1))
         df2.to_csv(
-            "{}_level_{}_seed_{}_{}_{}_pruning_rates_global_pr_{}.csv".format(args.model, args.RF_level, seed_from_file,
-                                                                              args.dataset, args.name,
-                                                                              args.pruning_rate),
+            "{}/{}_level_{}_seed_{}_{}_{}_pruning_rates_global_pr_{}.csv".format(args.folder, args.model, args.RF_level,
+                                                                                 seed_from_file,
+                                                                                 args.dataset, args.name,
+                                                                                 args.pruning_rate),
             index=False)
 
         print("Done")
@@ -979,7 +982,9 @@ def main(args):
                        "Dense Accuracy": dense_accuracy_list,
                        "Pruned Accuracy": pruned_accuracy_list,
                        })
-    df.to_csv("RF_{}_{}_{}_{}_one_shot_summary.csv".format(args.model, args.RF_level, args.dataset, args.pruning_rate),
+
+    df.to_csv("{}/RF_{}_{}_{}_{}_one_shot_summary.csv".format(args.folder, args.model, args.RF_level, args.dataset,
+                                                              args.pruning_rate),
               index=False)
 
 
