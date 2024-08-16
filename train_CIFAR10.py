@@ -153,7 +153,7 @@ def format_time(seconds):
 
 # Training
 def train(epoch):
-    global best_acc, testloader, device, criterion, trainloader, optimizer, net, use_ffcv
+    global best_acc, testloader, device, criterion, trainloader, optimizer, net, use_ffcv, total_flops, batch_flops, record_flops
     print('\nEpoch: %d' % epoch)
     net.train()
     train_loss = 0
@@ -183,6 +183,9 @@ def train(epoch):
         if batch_idx == 0:
             t0 = time.time()
         loss.backward()
+        if record_flops:
+            backwardflops = 2 * batch_flops
+            total_flops += batch_flops + backwardflops
         if batch_idx == 0:
             t1 = time.time()
             print("Time for backward pass {}".format(t1 - t0))
@@ -511,8 +514,9 @@ def get_datasets(args):
 
 def main(args):
     print(args)
-    global best_acc, testloader, device, criterion, trainloader, optimizer, net, use_ffcv
+    global best_acc, testloader, device, criterion, trainloader, optimizer, net, use_ffcv,total_flops, batch_flops, record_flops
 
+    record_flops = args.record_flops
     use_ffcv = args.ffcv
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -802,6 +806,11 @@ def main(args):
     # print("First learning rate:{}".format(lr_list[0]))
     # print("Last learning rate:{}".format(lr_list[-1]))
 
+    total_flops = 0
+    if record_flops:
+        x, y = next(iter(trainloader))
+        x = x.to(device)
+        batch_flops, _ = flops(net, x)
     for epoch in range(start_epoch, start_epoch + args.epochs):
 
         print(epoch)
@@ -814,6 +823,18 @@ def main(args):
             # log metrics to wandb
             wandb.log({"Epoch": epoch, "Train Accuracy": train_acc, "Test Accuracy": test_acc})
 
+        if args.record_flops:
+            filepath = "{}/{}_flops.csv".format(args.save_folder, solution_name)
+
+            if Path(filepath).is_file():
+                log_dict = {"Epoch": [epoch], "flops": [total_flops]}
+                df = pd.DataFrame(log_dict)
+                df.to_csv(filepath, mode="a", header=False, index=False)
+            else:
+                # Try to read the file to see if it is
+                log_dict = {"Epoch": [epoch], "flops": [total_flops]}
+                df = pd.DataFrame(log_dict)
+                df.to_csv(filepath, sep=",", index=False)
         if args.record_time:
             filepath = "{}/{}_training_time.csv".format(args.save_folder, solution_name)
             if Path(filepath).is_file():
