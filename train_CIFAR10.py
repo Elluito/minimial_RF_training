@@ -892,7 +892,7 @@ if __name__ == '__main__':
     parser.add_argument('--width', default=1, type=int, help='Width of the Network')
     parser.add_argument('--record', default=0, type=int, help='To record the training data or not')
     parser.add_argument('--record_time', default=0, type=int, help="Record the training time")
-    parser.add_argument('--record_flops', action='store_true', help="Record the training time")
+    parser.add_argument('--record_flops', action='store_true', help="Record the training Flops")
     parser.add_argument('--ffcv', action='store_true', help='Use FFCV loaders')
     parser.add_argument('--ffcv_train',
                         default="/jmain02/home/J2AD014/mtc03/lla98-mtc03/small_imagenet_ffcv/train_360_0.5_90.ffcv",
