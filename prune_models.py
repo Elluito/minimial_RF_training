@@ -785,7 +785,7 @@ def main(args):
     if args.model == "vgg19":
         exclude_layers = ["features.0", "classifier"]
     else:
-        exclude_layers = ["conv1", "linear"]
+        exclude_layers = ["conv1", "linear","fc"]
 
     cfg = omegaconf.DictConfig(
         {"architecture": args.model,
@@ -967,9 +967,9 @@ def main(args):
         df2 = pd.DataFrame({"layer_names": weight_names, "pr": pruning_rates_per_layer})
         print("Seed from file {}".format(seed_from_file1))
         df2.to_csv(
-            "{}/{}_level_{}_seed_{}_{}_{}_pruning_rates_global_pr_{}.csv".format(args.folder, args.model, args.RF_level,
+            "{}/{}_level_{}_seed_{}_{}_{}_pruning_rates_{}_pr_{}.csv".format(args.folder, args.model, args.RF_level,
                                                                                  seed_from_file,
-                                                                                 args.dataset, args.name,
+                                                                                 args.dataset, args.name,cfg.pruner,
                                                                                  args.pruning_rate),
             index=False)
 
@@ -983,8 +983,8 @@ def main(args):
                        "Pruned Accuracy": pruned_accuracy_list,
                        })
 
-    df.to_csv("{}/RF_{}_{}_{}_{}_one_shot_summary.csv".format(args.folder, args.model, args.RF_level, args.dataset,
-                                                              args.pruning_rate),
+    df.to_csv("{}/RF_{}_{}_{}_{}_{}_one_shot_summary.csv".format(args.folder, args.model, args.RF_level, args.dataset,
+                                                              args.pruning_rate,cfg.pruner),
               index=False)
 
 
@@ -1033,6 +1033,7 @@ if __name__ == '__main__':
         print("Experiment 1")
         print(args)
         main(args)
+
         # pruning_fine_tuning_experiment(args)
     # if args.experiment == 2:
     #     print("Experiment 2")
